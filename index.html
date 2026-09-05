@@ -1,453 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Super‑Resolution · Paper Cards</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f6f8fc;
-      color: #1e293b;
-      padding: 2rem 1.5rem;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .container {
-      max-width: 900px;
-      width: 100%;
-    }
-
-    .header {
-      margin-bottom: 2.5rem;
-      text-align: center;
-    }
-
-    .header h1 {
-      font-weight: 600;
-      font-size: 2.2rem;
-      letter-spacing: -0.02em;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .header h1 i {
-      color: #3b82f6;
-      font-size: 2rem;
-    }
-
-    .header p {
-      color: #475569;
-      margin-top: 0.5rem;
-      font-size: 1.05rem;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 1rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 20, 40, 0.02);
-      padding: 1.8rem 1.6rem 1.6rem;
-      transition: transform 0.2s ease, box-shadow 0.25s ease;
-      border: 1px solid #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
-      border-color: #dbeafe;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .card-title {
-      font-weight: 600;
-      font-size: 1.2rem;
-      line-height: 1.4;
-      color: #0f172a;
-      flex: 1;
-    }
-
-    .card-title a {
-      text-decoration: none;
-      color: #0f172a;
-      transition: color 0.15s;
-    }
-
-    .card-title a:hover {
-      color: #2563eb;
-    }
-
-    .card-year {
-      background: #eef2ff;
-      color: #4338ca;
-      font-weight: 500;
-      font-size: 0.8rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 30px;
-      white-space: nowrap;
-      border: 1px solid #c7d2fe;
-      letter-spacing: 0.01em;
-    }
-
-    .card-authors {
-      font-size: 0.9rem;
-      color: #475569;
-      margin-bottom: 0.9rem;
-      font-weight: 400;
-      line-height: 1.5;
-      border-bottom: 1px dashed #e9edf2;
-      padding-bottom: 0.7rem;
-    }
-
-    .card-authors i {
-      color: #64748b;
-      margin-right: 0.3rem;
-      width: 1.1rem;
-    }
-
-    .card-abstract {
-      font-size: 0.92rem;
-      line-height: 1.6;
-      color: #334155;
-      margin-bottom: 1.5rem;
-      flex: 1;
-      background: #fafcff;
-      padding: 0.8rem 1rem;
-      border-radius: 14px;
-      border-left: 3px solid #bfdbfe;
-    }
-
-    .card-abstract i {
-      color: #3b82f6;
-      margin-right: 0.4rem;
-      opacity: 0.7;
-    }
-
-    .card-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.2rem;
-      align-items: center;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.1rem;
-      border-radius: 40px;
-      font-weight: 500;
-      font-size: 0.85rem;
-      text-decoration: none;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-      background: #f1f5f9;
-      color: #1e293b;
-    }
-
-    .btn i {
-      font-size: 0.9rem;
-    }
-
-    .btn-primary {
-      background: #1e293b;
-      color: white;
-      border-color: #1e293b;
-    }
-
-    .btn-primary:hover {
-      background: #0f172a;
-      transform: scale(0.97);
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border-color: #d1d9e6;
-      color: #334155;
-    }
-
-    .btn-outline:hover {
-      background: #f1f5f9;
-      border-color: #94a3b8;
-    }
-
-    .btn-paywall {
-      background: #fef2f2;
-      color: #b91c1c;
-      border-color: #fecaca;
-      cursor: default;
-      opacity: 0.8;
-    }
-
-    .btn-paywall i {
-      color: #dc2626;
-    }
-
-    .btn-paywall:hover {
-      background: #fee2e2;
-    }
-
-    .btn-arxiv {
-      background: #e6f0ff;
-      color: #1e4b8a;
-      border-color: #b6d0f0;
-    }
-
-    .btn-arxiv:hover {
-      background: #d4e4ff;
-      border-color: #8bb0e0;
-    }
-
-    .badge-free {
-      background: #dcfce7;
-      color: #166534;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 30px;
-      margin-left: 0.3rem;
-      border: 1px solid #bbf7d0;
-      letter-spacing: 0.02em;
-    }
-
-    .badge-pay {
-      background: #fee2e2;
-      color: #991b1b;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 30px;
-      margin-left: 0.3rem;
-      border: 1px solid #fecaca;
-    }
-
-    .footer-note {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: #64748b;
-      text-align: center;
-      border-top: 1px solid #e2e8f0;
-      padding-top: 1.8rem;
-      width: 100%;
-    }
-
-    .footer-note i {
-      color: #3b82f6;
-    }
-
-    @media (max-width: 500px) {
-      body {
-        padding: 1.2rem 0.8rem;
-      }
-      .card {
-        padding: 1.4rem;
-      }
-      .card-title {
-        font-size: 1.1rem;
-      }
-      .btn {
-        font-size: 0.8rem;
-        padding: 0.45rem 0.9rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IP-SAKTI Sahayak — Research Foundation | SIH 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#fdf5ef;
+  --bg-warm:#f8ede2;
+  --surface:#fff7f0;
+  --card:#fffdfa;
+  --card-hover:#fff9f3;
+  --kesari-900:#5c2d00;
+  --kesari-800:#7a3d00;
+  --kesari-700:#914800;
+  --kesari-600:#b85c00;
+  --kesari-500:#d96f00;
+  --kesari-400:#f28c28;
+  --kesari-100:#ffe0b8;
+  --kesari-50:#fff3e6;
+  --gold:#b8860b;
+  --gold-light:#d4a843;
+  --text:#2c2c2c;
+  --muted:#6b5d4f;
+  --border:rgba(92,45,0,.1);
+  --border-strong:rgba(92,45,0,.18);
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+/* ── Hero ── */
+.hero{
+  min-height:72vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:4rem 1.5rem 3rem;
+  position:relative;
+  overflow:hidden;
+  background:var(--kesari-900);
+  color:#fdf5ef;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(242,140,40,.22) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 80% at 80% 100%,rgba(217,111,0,.12) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:120px;
+  background:linear-gradient(to bottom,transparent,var(--bg));
+  pointer-events:none;
+}
+.badge{
+  position:relative;
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.45rem 1.2rem;
+  border:1px solid rgba(212,168,67,.35);
+  border-radius:999px;
+  font-size:1rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--gold-light);
+  background:rgba(184,134,11,.1);
+  margin-bottom:1.6rem;
+  backdrop-filter:blur(6px);
+}
+.badge span{font-size:1rem}
+.hero h1{
+  position:relative;
+  font-family:'DM Serif Display',serif;
+  font-weight:400;
+  font-size:clamp(2.6rem,6.5vw,4.6rem);
+  line-height:1.1;
+  max-width:750px;
+  color:#fdf5ef;
+}
+.hero h1 em{
+  font-style:normal;
+  color:var(--gold-light);
+}
+.hero p.subtitle{
+  position:relative;
+  margin-top:1.3rem;
+  font-size:1rem;
+  color:rgba(253,245,239,.62);
+  max-width:540px;
+  line-height:1.75;
+}
+.stat-row{
+  position:relative;
+  display:flex;gap:3rem;margin-top:2.8rem;
+  flex-wrap:wrap;justify-content:center;
+}
+.stat{text-align:center}
+.stat .num{
+  font-family:'DM Serif Display',serif;
+  font-size:2.1rem;color:#fdf5ef;
+}
+.stat .label{
+  font-size:.7rem;color:rgba(253,245,239,.5);
+  text-transform:uppercase;letter-spacing:.1em;margin-top:.1rem;
+}
+/* ── Divider leaf ── */
+.leaf-divider{
+  display:flex;align-items:center;justify-content:center;
+  gap:.8rem;padding:2rem 0 .5rem;
+  max-width:960px;margin:0 auto;
+}
+.leaf-divider::before,.leaf-divider::after{
+  content:'';flex:1;height:1px;background:var(--border-strong);
+}
+.leaf-divider svg{color:var(--kesari-600);width:22px;height:22px;opacity:.5}
+/* ── Papers ── */
+.papers-section{
+  max-width:960px;margin:0 auto;
+  padding:1.5rem 1.5rem 5rem;
+}
+.section-header{
+  display:flex;align-items:baseline;gap:.8rem;
+  margin-bottom:2.2rem;
+}
+.section-label{
+  font-size:.68rem;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--kesari-600);
+  background:var(--kesari-50);
+  padding:.3rem .7rem;border-radius:6px;
+}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:1.55rem;color:var(--kesari-900);
+}
+.paper-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.8rem 2rem 1.5rem;
+  margin-bottom:1.25rem;
+  transition:all .3s ease;
+  position:relative;
+  box-shadow:0 1px 3px rgba(92,45,0,.04);
+}
+.paper-card:hover{
+  background:var(--card-hover);
+  border-color:var(--kesari-100);
+  box-shadow:0 8px 30px rgba(92,45,0,.07);
+  transform:translateY(-2px);
+}
+/* Index stripe on left — default colour guarantees every card gets one */
+.paper-card::before{
+  content:'';position:absolute;left:0;top:1.2rem;bottom:1.2rem;
+  width:4px;border-radius:0 4px 4px 0;
+  background:var(--kesari-600);
+}
+/* nth-of-type (not nth-child) so the .section-header div doesn't shift the count */
+.paper-card:nth-of-type(1)::before{background:var(--kesari-700)}
+.paper-card:nth-of-type(2)::before{background:var(--gold)}
+.paper-card:nth-of-type(3)::before{background:var(--kesari-500)}
+.paper-card:nth-of-type(4)::before{background:#8b6914}
+.paper-card:nth-of-type(5)::before{background:var(--kesari-600)}
+.paper-card .top-row{
+  display:flex;align-items:center;gap:.6rem;
+  margin-bottom:.75rem;flex-wrap:wrap;
+}
+.paper-card .index-num{
+  font-family:'DM Serif Display',serif;
+  font-size:.95rem;color:var(--kesari-700);
+  min-width:1.8rem;
+}
+.paper-card .venue{
+  font-size:.65rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:.22rem .65rem;border-radius:5px;
+  background:var(--kesari-50);
+  color:var(--kesari-700);
+  border:1px solid rgba(146,72,0,.08);
+}
+.paper-card:nth-of-type(2) .venue,
+.paper-card:nth-of-type(4) .venue{
+  background:rgba(184,134,11,.07);
+  color:var(--gold);
+  border-color:rgba(184,134,11,.1);
+}
+.paper-card h3{
+  font-family:'DM Serif Display',serif;
+  font-size:1.15rem;font-weight:400;
+  color:var(--kesari-900);
+  line-height:1.4;
+  margin-bottom:.6rem;
+}
+.paper-card .desc{
+  font-size:.86rem;color:var(--muted);
+  line-height:1.72;margin-bottom:1.1rem;
+}
+.paper-card .meta-row{
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+}
+.paper-card .meta-chip{
+  font-size:.67rem;font-weight:500;
+  padding:.2rem .55rem;border-radius:5px;
+  background:var(--bg-warm);color:var(--muted);
+}
+.paper-card .read-link{
+  margin-left:auto;
+  display:inline-flex;align-items:center;gap:.35rem;
+  font-size:.8rem;font-weight:600;
+  color:var(--kesari-700);
+  text-decoration:none;
+  padding:.35rem .8rem;
+  border-radius:8px;
+  background:var(--kesari-50);
+  border:1px solid rgba(146,72,0,.1);
+  transition:all .2s;
+}
+.paper-card .read-link:hover{
+  background:var(--kesari-700);color:#fdf5ef;
+  border-color:var(--kesari-700);
+}
+.paper-card .read-link svg{width:13px;height:13px;transition:transform .2s}
+.paper-card .read-link:hover svg{transform:translateX(3px)}
+/* ── Footer ── */
+.footer{
+  text-align:center;padding:2.5rem 1.5rem 3rem;
+  border-top:1px solid var(--border);
+  max-width:960px;margin:0 auto;
+}
+.footer p{font-size:.76rem;color:var(--muted)}
+.footer strong{color:var(--kesari-800)}
+.footer .foot-badge{
+  display:inline-block;
+  margin-top:.6rem;
+  font-size:.62rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:.25rem .7rem;border-radius:5px;
+  background:var(--kesari-50);color:var(--kesari-600);
+}
+@media(max-width:640px){
+  .hero{min-height:60vh;padding:3rem 1.2rem 2.5rem}
+  .paper-card{padding:1.3rem 1.2rem 1.2rem}
+  .paper-card h3{font-size:1.02rem}
+  .paper-card .read-link{margin-left:0;margin-top:.6rem;width:100%;justify-content:center}
+  .stat-row{gap:1.5rem}
+  .section-header{flex-direction:column;gap:.3rem}
+}
+</style>
 </head>
 <body>
-<div class="container">
 
-  <div class="header">
-    <h1>
-      SIH2026 · Image &amp; Resolution · TEAM ORCAS
-    </h1>
-    <p>
-      <i class="fas fa-chevron-right" style="font-size:0.8rem; opacity:0.6;"></i>
-      From EDSR to SwinIR, plus comprehensive remote‑sensing surveys
-    </p>
+<section class="hero">
+  <div class="badge"><span>💡</span> Smart India Hackathon 2026</div>
+  <div class="badge">Team Orcas</div>
+  <h1>IP-SAKTI <em>Sahayak</em></h1>
+  <p class="subtitle">Research papers and academic references powering our Intellectual Property assistant — bridging NLP, retrieval-augmented generation, and Indian patent intelligence.</p>
+  <div class="stat-row">
+    <div class="stat"><div class="num">5</div><div class="label">Papers</div></div>
+    <div class="stat"><div class="num">4</div><div class="label">Domains</div></div>
+    <div class="stat"><div class="num">2024–25</div><div class="label">Publication Range</div></div>
   </div>
+</section>
 
-  <div class="grid">
-
-    <!-- 1. EDSR (CVPR 2017 workshop) -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <a href="https://openaccess.thecvf.com/content_cvpr_2017_workshops/w12/papers/Lim_Enhanced_Deep_Residual_CVPR_2017_paper.pdf" target="_blank">
-            EDSR
-          </a>
-        </span>
-        <span class="card-year">2017</span>
-      </div>
-      <div class="card-authors">
-        <i class="fas fa-user-pen"></i> Lim · Son · Kim · Nah · Lee
-      </div>
-      <div class="card-abstract">
-        <i class="fas fa-quote-left"></i>
-        Enhanced Deep Residual Networks (EDSR) remove unnecessary modules from residual networks and scale up model size, achieving top performance in single‑image super‑resolution and winning the NTIRE2017 challenge.
-      </div>
-      <div class="card-actions">
-        <a href="https://openaccess.thecvf.com/content_cvpr_2017_workshops/w12/papers/Lim_Enhanced_Deep_Residual_CVPR_2017_paper.pdf" target="_blank" class="btn btn-primary">
-          <i class="fas fa-file-pdf"></i> PDF (CVF)
-        </a>
-        <a href="https://arxiv.org/abs/1707.02921" target="_blank" class="btn btn-arxiv">
-          <i class="fas fa-archive"></i> arXiv
-        </a>
-        <span class="badge-free"><i class="fas fa-check-circle"></i> Free</span>
-      </div>
-    </div>
-
-    <!-- 2. SwinIR (ICCV 2021 workshop) -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <a href="https://openaccess.thecvf.com/content/ICCV2021W/AIM/html/Liang_SwinIR_Image_Restoration_Using_Swin_Transformer_ICCVW_2021_paper.html" target="_blank">
-            SwinIR
-          </a>
-        </span>
-        <span class="card-year">2021</span>
-      </div>
-      <div class="card-authors">
-        <i class="fas fa-user-pen"></i> Liang · Cao · Sun · Zhang · Van Gool · Timofte
-      </div>
-      <div class="card-abstract">
-        <i class="fas fa-quote-left"></i>
-        A strong Swin Transformer‑based baseline for image restoration, achieving state‑of‑the‑art on super‑resolution, denoising, and JPEG artifact removal with up to 67% fewer parameters.
-      </div>
-      <div class="card-actions">
-        <a href="https://openaccess.thecvf.com/content/ICCV2021W/AIM/html/Liang_SwinIR_Image_Restoration_Using_Swin_Transformer_ICCVW_2021_paper.html" target="_blank" class="btn btn-primary">
-          <i class="fas fa-globe"></i> Conference page
-        </a>
-        <a href="https://arxiv.org/abs/2108.10257" target="_blank" class="btn btn-arxiv">
-          <i class="fas fa-archive"></i> arXiv
-        </a>
-        <span class="badge-free"><i class="fas fa-check-circle"></i> Free</span>
-      </div>
-    </div>
-
-    <!-- 3. Wang, Bayram & Sertel (2022) Earth-Science Reviews  (paywalled) -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <a href="https://www.sciencedirect.com/science/article/abs/pii/S0012825222001945" target="_blank">
-            DL-based RSISR review
-          </a>
-        </span>
-        <span class="card-year">2022</span>
-      </div>
-      <div class="card-authors">
-        <i class="fas fa-user-pen"></i> Wang · Bayram · Sertel
-      </div>
-      <div class="card-abstract">
-        <i class="fas fa-quote-left"></i>
-        A comprehensive review in <em>Earth‑Science Reviews</em> covering deep learning‑based remote sensing image super‑resolution, including models, datasets, loss functions, and evaluation metrics, along with a new multi‑sensor dataset.
-      </div>
-      <div class="card-actions">
-        <a href="https://www.sciencedirect.com/science/article/abs/pii/S0012825222001945" target="_blank" class="btn btn-primary">
-          <i class="fas fa-external-link-alt"></i> Go to ScienceDirect
-        </a>
-        <span class="badge-pay"><i class="fas fa-lock"></i> Paywalled</span>
-        <span style="font-size:0.75rem; color:#64748b; margin-left:0.2rem;">DOI: 10.1016/j.earscirev.2022.104110</span>
-      </div>
-    </div>
-
-    <!-- 4. Yang et al. (2026) Neurocomputing (paywalled) -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <a href="https://www.sciencedirect.com/science/article/abs/pii/S092523122600336X" target="_blank">
-            RSISR advances &amp; challenges
-          </a>
-        </span>
-        <span class="card-year">2026</span>
-      </div>
-      <div class="card-authors">
-        <i class="fas fa-user-pen"></i> Yang et al. (Neurocomputing)
-      </div>
-      <div class="card-abstract">
-        <i class="fas fa-quote-left"></i>
-        A <em>Neurocomputing</em> survey that systematically reviews deep learning RSISR methods since 2020, covering supervised/unsupervised learning, attention, GANs, Transformers, diffusion models, and Mamba, with future challenges.
-      </div>
-      <div class="card-actions">
-        <a href="https://www.sciencedirect.com/science/article/abs/pii/S092523122600336X" target="_blank" class="btn btn-primary">
-          <i class="fas fa-external-link-alt"></i> Go to ScienceDirect
-        </a>
-        <span class="badge-pay"><i class="fas fa-lock"></i> Paywalled</span>
-        <span style="font-size:0.75rem; color:#64748b; margin-left:0.2rem;">DOI: 10.1016/j.neucom.2026.132939</span>
-      </div>
-    </div>
-
-    <!-- 5. Qi et al. (2026) ISPRS (arXiv free) -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">
-          <a href="https://arxiv.org/abs/2505.23248" target="_blank">
-            RSISR comprehensive survey
-          </a>
-        </span>
-        <span class="card-year">2026</span>
-      </div>
-      <div class="card-authors">
-        <i class="fas fa-user-pen"></i> Qi et al. (ISPRS)
-      </div>
-      <div class="card-abstract">
-        <i class="fas fa-quote-left"></i>
-        Accepted in ISPRS Journal, this survey reviews RSISR algorithms, datasets, and evaluation metrics, categorises supervised/unsupervised methods, identifies limitations in texture preservation under large‑scale degradation, and discusses domain‑specific architectures.
-      </div>
-      <div class="card-actions">
-        <a href="https://arxiv.org/abs/2505.23248" target="_blank" class="btn btn-primary">
-          <i class="fas fa-archive"></i> arXiv abstract
-        </a>
-        <a href="https://arxiv.org/pdf/2505.23248" target="_blank" class="btn btn-arxiv">
-          <i class="fas fa-file-pdf"></i> PDF
-        </a>
-        <span class="badge-free"><i class="fas fa-check-circle"></i> Free</span>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer-note">
-    <i class="fas fa-circle-info"></i>
-    Click on the card title or buttons to access the original paper. Paywalled articles are marked <span class="badge-pay" style="font-size:0.75rem; padding:0.1rem 0.6rem;">Paywalled</span>; the rest are open access or arXiv preprints.
-  </div>
+<div class="leaf-divider">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66C7.72 17.13 9.28 13 17 11V14l7-7-7-7v8z"/></svg>
 </div>
+
+<section class="papers-section">
+  <div class="section-header">
+    <span class="section-label">Literature Survey</span>
+    <span class="section-title">Research Foundation</span>
+  </div>
+
+  <!-- Paper 1 -->
+  <article class="paper-card">
+    <div class="top-row">
+      <span class="index-num">01</span>
+      <span class="venue">Springer · AI Review · 2025</span>
+    </div>
+    <h3>Natural Language Processing in the Patent Domain: A Survey</h3>
+    <p class="desc">A comprehensive survey equipping NLP researchers with essential knowledge to navigate patent analysis and generation. Covers nine patent analysis tasks and four generation tasks, mapping how LLMs can be leveraged for this complex legal-technical domain.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Jiang &amp; Goetz</span>
+      <span class="meta-chip">Artificial Intelligence Review</span>
+      <span class="meta-chip">Open Access</span>
+      <a class="read-link" href="https://link.springer.com/article/10.1007/s10462-025-11168-z" target="_blank" rel="noopener">Read Paper <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+    </div>
+  </article>
+
+  <!-- Paper 2 -->
+  <article class="paper-card">
+    <div class="top-row">
+      <span class="index-num">02</span>
+      <span class="venue">ScienceDirect · Intelligent Systems · 2024</span>
+    </div>
+    <h3>Tree Boosting Methods for Balanced and Imbalanced Classification and Their Robustness Over Time in Risk Assessment</h3>
+    <p class="desc">Explores tree-based boosting techniques for handling class imbalance in classification tasks — directly relevant to patent grant prediction and prior-art risk scoring where positive and negative samples are heavily skewed.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Velarde et al.</span>
+      <span class="meta-chip">Intelligent Systems with Applications</span>
+      <a class="read-link" href="https://www.sciencedirect.com/science/article/pii/S2667305324000309" target="_blank" rel="noopener">Read Paper <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+    </div>
+  </article>
+
+  <!-- Paper 3 -->
+  <article class="paper-card">
+    <div class="top-row">
+      <span class="index-num">03</span>
+      <span class="venue">ACL 2024 · Long Paper</span>
+    </div>
+    <h3>Grounding Language Model with Chunking-Free In-Context Retrieval</h3>
+    <p class="desc">Introduces the CFIC retrieval approach for RAG systems — eliminating document chunking by using encoded hidden states for in-context retrieval. Incorporates Constrained Sentence Prefix Decoding and Skip Decoding for precise evidence grounding in long patent documents.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Qian et al.</span>
+      <span class="meta-chip">ACL 2024, Bangkok</span>
+      <a class="read-link" href="https://aclanthology.org/2024.acl-long.71/" target="_blank" rel="noopener">Read Paper <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+    </div>
+  </article>
+
+  <!-- Paper 4 -->
+  <article class="paper-card">
+    <div class="top-row">
+      <span class="index-num">04</span>
+      <span class="venue">ACL 2024 · Long Paper</span>
+    </div>
+    <h3>Generate-then-Ground in Retrieval-Augmented Generation for Multi-hop Question Answering</h3>
+    <p class="desc">Proposes the GenGround framework that synergizes LLM parametric knowledge with external documents for multi-hop QA — decomposing complex patent queries into simpler single-hop questions, generating answers, then grounding them in retrieved documents.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Shi et al.</span>
+      <span class="meta-chip">ACL 2024, Bangkok</span>
+      <a class="read-link" href="https://aclanthology.org/2024.acl-long.397/" target="_blank" rel="noopener">Read Paper <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+    </div>
+  </article>
+
+  <!-- Paper 5 -->
+  <article class="paper-card">
+    <div class="top-row">
+      <span class="index-num">05</span>
+      <span class="venue">TIPR · IP Research · 2024</span>
+    </div>
+    <h3>Traditional Knowledge Digital Library as Patent System Facilitator</h3>
+    <p class="desc">Examines India's TKDL and its role in preventing biopiracy by serving as prior art against illegitimate patent claims on traditional knowledge. Proposes a TKDL fund model for indigenous community development through controlled third-party access.</p>
+    <div class="meta-row">
+      <span class="meta-chip">Yadav &amp; Vibha</span>
+      <span class="meta-chip">Trends in IP Research</span>
+      <span class="meta-chip">India-specific</span>
+      <a class="read-link" href="https://iprtrends.com/TIPR/article/view/20" target="_blank" rel="noopener">Read Paper <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
+    </div>
+  </article>
+
+</section>
+
+<footer class="footer">
+  <p><strong>IP-SAKTI Sahayak</strong> · Smart India Hackathon 2026 · Research References</p>
+  <span class="foot-badge">Team Orcas</span>
+</footer>
+
 </body>
 </html>
